@@ -4,8 +4,8 @@ import { DBC } from "../../DBCFiles";
 import { SQL } from "../../SQLFiles";
 import { LootSet } from "../Loot/Loot";
 import { MainEntity } from "../Misc/Entity";
-import { Ids, StaticIDGenerator } from "../Misc/Ids";
-import { RegistryStatic } from "../Refs/Registry";
+import { DynamicIDGenerator, Ids } from "../Misc/Ids";
+import { RegistryDynamic } from "../Refs/Registry";
 
 export class MailTemplate extends MainEntity<MailTemplateRow> {
     get Body() { return this.wrapLoc(this.row.Body); }
@@ -15,12 +15,12 @@ export class MailTemplate extends MainEntity<MailTemplateRow> {
 }
 
 export class MailTemplateRegistryClass
-    extends RegistryStatic<MailTemplate,MailTemplateRow,MailTemplateQuery>
+    extends RegistryDynamic<MailTemplate,MailTemplateRow,MailTemplateQuery>
 {
     protected Table(): Table<any, MailTemplateQuery, MailTemplateRow> & { add: (id: number) => MailTemplateRow; } {
         return DBC.MailTemplate
     }
-    protected IDs(): StaticIDGenerator {
+    protected ids(): DynamicIDGenerator {
         return Ids.MailTemplate
     }
     Clear(entity: MailTemplate): void {

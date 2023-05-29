@@ -4,9 +4,9 @@ import { Table } from "../../../data/table/Table";
 import { TotemCategoryQuery, TotemCategoryRow } from "../../dbc/TotemCategory";
 import { DBC } from "../../DBCFiles";
 import { MainEntity } from "../Misc/Entity";
-import { Ids, StaticIDGenerator } from "../Misc/Ids";
-import { makeRefStatic } from "../Refs/Ref";
-import { RegistryStatic } from "../Refs/Registry";
+import { DynamicIDGenerator, Ids } from "../Misc/Ids";
+import { makeRefDynamic } from "../Refs/Ref";
+import { RegistryDynamic } from "../Refs/Registry";
 import { TotemTypeRegistry } from "./TotemType";
 
 export class TotemCategory extends MainEntity<TotemCategoryRow> {
@@ -56,16 +56,16 @@ export enum ItemTotemCategory {
 }
 
 export class TotemCategoryRegistryClass
-    extends RegistryStatic<TotemCategory,TotemCategoryRow,TotemCategoryQuery>
+    extends RegistryDynamic<TotemCategory,TotemCategoryRow,TotemCategoryQuery>
 {
     ref<T>(owner: T, cell: Cell<number,any>) {
-        return makeRefStatic(ItemTotemCategory,owner,cell,this);
+        return makeRefDynamic(ItemTotemCategory,owner,cell,this);
     }
 
     protected Table(): Table<any, TotemCategoryQuery, TotemCategoryRow> & { add: (id: number) => TotemCategoryRow; } {
         return DBC.TotemCategory
     }
-    protected IDs(): StaticIDGenerator {
+    protected ids(): DynamicIDGenerator {
         return Ids.TotemCategory
     }
     Clear(entity: TotemCategory): void {
@@ -87,8 +87,8 @@ export class TotemCategoryRegistryClass
         return new TotemCategory(r);
     }
 
-    createNewType(mod: string, name: string) {
-        return this.create(mod,name).Type.modRefCopy(()=>{})
+    createNewType() {
+        return this.create().Type.modRefCopy(()=>{})
     }
 }
 

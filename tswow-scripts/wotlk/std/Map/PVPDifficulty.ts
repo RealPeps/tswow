@@ -36,9 +36,9 @@ export class PVPDifficultyRegistryClass
         return e.row.ID.get();
     }
 
-    create(mod: string, name: string, map: number) {
+    create(map: number) {
         return new PVPDifficulty(
-            DBC.PvpDifficulty.add(Ids.PvpDifficulty.id(mod,name))
+            DBC.PvpDifficulty.add(Ids.PvpDifficulty.id())
                 .MapID.set(map)
                 .MinLevel.set(1)
                 .MaxLevel.set(80)
@@ -47,9 +47,9 @@ export class PVPDifficultyRegistryClass
 
     }
 
-    createSimple(mod: string, name: string, map: number, minLevel: number, maxLevel: number, difficulty: number) {
+    createSimple(map: number, minLevel: number, maxLevel: number, difficulty: number) {
         return new PVPDifficulty(
-            DBC.PvpDifficulty.add(Ids.PvpDifficulty.id(mod,name))
+            DBC.PvpDifficulty.add(Ids.PvpDifficulty.id())
                 .MapID.set(map)
                 .MinLevel.set(minLevel)
                 .MaxLevel.set(maxLevel)
@@ -69,18 +69,18 @@ export class PVPDifficulties extends MultiRowSystem<PVPDifficulty,Map> {
         return value.isDeleted();
     }
 
-    addGet(mod: string, name: string) {
+    addGet() {
         if(DBC.MapDifficulty.query({MapID:this.owner.ID}) !== undefined) {
             throw new Error(
                   `Cannot add PVP difficulty to ${this.owner.ID},`
                 + ` it already has PVE difficulties`
             )
         }
-        return PVPDifficultyRegistry.create(mod,name,this.owner.ID)
+        return PVPDifficultyRegistry.create(this.owner.ID)
     }
 
-    add(mod: string, name: string, minLevel: number, maxLevel: number, difficulty: number = 0) {
-        this.addGet(mod,name)
+    add(minLevel: number, maxLevel: number, difficulty: number = 0) {
+        this.addGet()
             .Levels.set(minLevel,maxLevel)
             .Difficulty.set(difficulty)
         return this.owner;

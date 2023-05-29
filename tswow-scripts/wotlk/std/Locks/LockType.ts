@@ -47,8 +47,8 @@ export class LockTypeLocks extends MultiRowSystem<Lock,LockType> {
         return value.row.isDeleted();
     }
 
-    add(mod: string, name: string, requiredSkill: number, requiredItems: number[] = []) {
-        let locks = LockRegistry.create(mod,name).Requirements
+    add(requiredSkill: number, requiredItems: number[] = []) {
+        let locks = LockRegistry.create().Requirements
             .addMod(i=>i
                 .Type.LOCK_TYPE.set()
                 .LockType.set(this.owner.ID)
