@@ -7947,6 +7947,7 @@ declare namespace _hidden {
 
     export class Player<T> {
         OnPVPKill(callback: (killer : TSPlayer,killed : TSPlayer)=>void);
+        OnSetPvP(callback: (player: TSPlayer, state: bool) => void);
         OnCreatureKill(callback: (killer : TSPlayer,killed : TSCreature)=>void);
         OnPlayerKilledByCreature(callback: (killer : TSCreature,killed : TSPlayer)=>void);
         OnLevelChanged(callback: (player : TSPlayer,oldLevel : uint8)=>void);
@@ -8137,6 +8138,8 @@ declare namespace _hidden {
             , creature: TSCreature
             , money: TSMutableNumber<float>
          ) => void);
+
+        OnRestFlagChanged(callback: (player: TSPlayer, newState: bool) => void);
     }
 
     export class Account<T> {

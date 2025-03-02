@@ -141,6 +141,7 @@ struct TSEvents
     {
          EVENTS_HEADER(PlayerEvents)
          EVENT(OnPVPKill, TSPlayer, TSPlayer)
+         EVENT(OnSetPvP, TSPlayer, bool)
          EVENT(OnCreatureKill, TSPlayer, TSCreature)
          EVENT(OnPlayerKilledByCreature, TSCreature, TSPlayer)
          EVENT(OnLevelChanged, TSPlayer, TSNumber<uint8>)
@@ -342,6 +343,9 @@ struct TSEvents
             , TSCreature creature
             , TSMutableNumber<float> money
          )
+
+         EVENT(OnRestFlagChanged, TSPlayer player, bool newState)
+
     } Player;
 
     struct AccountEvents

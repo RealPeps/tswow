@@ -38,6 +38,7 @@ void TSLua::load_events(sol::state& state)
 
     auto player_events = state.new_usertype<TSEvents::PlayerEvents>("PlayerEvents");
     LUA_HANDLE(player_events, PlayerEvents, OnPVPKill);
+    LUA_HANDLE(player_events, PlayerEvents, OnSetPvP);
     LUA_HANDLE(player_events, PlayerEvents, OnCreatureKill);
     LUA_HANDLE(player_events, PlayerEvents, OnPlayerKilledByCreature);
     LUA_HANDLE(player_events, PlayerEvents, OnLevelChanged);
@@ -109,6 +110,7 @@ void TSLua::load_events(sol::state& state)
     LUA_HANDLE(player_events, PlayerEvents, OnUpdateRangedAttackPower);
     LUA_HANDLE(player_events, PlayerEvents, OnGlyphInitForLevel);
     LUA_HANDLE(player_events, PlayerEvents, OnReputationPriceDiscount);
+    LUA_HANDLE(player_events, PlayerEvents, OnRestFlagChanged);
 
     auto account_events = state.new_usertype<TSEvents::AccountEvents>("AccountEvents");
     LUA_HANDLE(account_events, AccountEvents, OnAccountLogin);
